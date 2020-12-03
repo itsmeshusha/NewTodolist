@@ -33,10 +33,11 @@ const initialState = {}
 export const tasksReducer = (state: TasksStateType = initialState, action: ActionType) => {
     switch (action.type) {
         case 'REMOVE-TASK': {
-            const stateCopy = {...state}
-            let todolistTasks = state[action.todolistId]
-            stateCopy[action.todolistId] = todolistTasks.filter(t => t.id !== action.id)
-            return stateCopy
+            const stateCopy = {...state};
+            const tasks = state[action.todolistId];
+            const filteredTasks = tasks.filter(t => t.id !== action.id);
+            stateCopy[action.todolistId] = filteredTasks
+            return stateCopy;
         }
         case 'ADD-TASK': {
             const stateCopy = {...state}
@@ -48,20 +49,18 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
         case 'CHANGE-TASK-STATUS': {
             let stateCopy = {...state}
             let todolistTasks = stateCopy[action.todolistId]
-            let task = todolistTasks.find(t => t.id === action.id)
-            if (task) {
-                task.isDone = action.isDone
-            }
-            return {...stateCopy, [action.todolistId]: todolistTasks}
+            let newTaskArray = todolistTasks
+                .map(t => t.id === action.id ? {...t, isDone: action.isDone}: t)
+            stateCopy[action.todolistId] = newTaskArray
+            return {...stateCopy}
         }
         case 'CHANGE-TASK-TITLE': {
             let stateCopy = {...state}
             let todolistTasks = stateCopy[action.todolistId]
-            let task = todolistTasks.find(t => t.id === action.id)
-            if (task) {
-                task.title = action.title
-            }
-            return {... stateCopy, [action.todolistId]: todolistTasks}
+            let newTaskArray = todolistTasks
+                .map(t => t.id === action.id ? {...t, title: action.title}: t)
+            stateCopy[action.todolistId] = newTaskArray
+            return {...stateCopy}
         }
         case 'ADD-TODOLIST': {
             let stateCopy = {...state}
