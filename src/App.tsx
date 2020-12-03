@@ -15,7 +15,7 @@ export type TodolistType = {
 
 }
 
-type TasksStateType = {
+export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
@@ -83,8 +83,8 @@ function App() {
     }
 
     function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        let todolistTask = tasks[todolistId]
-        let task = todolistTask.find(t => t.id === id)
+        let todolistTasks = tasks[todolistId]
+        let task = todolistTasks.find(t => t.id === id)
         if (task) {
             task.title = newTitle
             setTasks({...tasks})
