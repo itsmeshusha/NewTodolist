@@ -6,10 +6,11 @@ type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
-export const  AddItemForm = React.memo(function(props: AddItemFormPropsType) {
+export const AddItemForm = React.memo(function(props: AddItemFormPropsType) {
     console.log("AddItemForm called")
-    const [title, setTitle] = useState('')
-    const [error, setError] = useState<string | null>(null)
+
+    let [title, setTitle] = useState("")
+    let [error, setError] = useState<string | null>(null)
 
     const addItem = () => {
         if (title.trim() !== "") {
@@ -26,31 +27,24 @@ export const  AddItemForm = React.memo(function(props: AddItemFormPropsType) {
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (error !== null) {
-            setError(null)
+            setError(null);
         }
         if (e.charCode === 13) {
-            addItem()
+            addItem();
         }
     }
 
-
-    return (
-        <div>
-
-            <TextField variant={"outlined"}
-                       value={title}
-                       error={!!error}
-                       onChange={onChangeHandler}
-                       onKeyPress={onKeyPressHandler}
-                       label={"Title"}
-                       helperText={error}
-                       />
-
-            <IconButton color={"primary"} onClick={addItem}>
-                <AddBox />
-            </IconButton>
-        </div>
-    )
+    return <div>
+        <TextField variant="outlined"
+                   error={!!error}
+                   value={title}
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
+                   label="Title"
+                   helperText={error}
+        />
+        <IconButton color="primary" onClick={addItem}>
+            <AddBox />
+        </IconButton>
+    </div>
 })
-
-export default AddItemForm
