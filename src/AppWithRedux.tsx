@@ -6,11 +6,11 @@ import {AddItemForm} from './AddItemForm';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 import {
-    addTodolistAC,
+    addTodolistAC, addTodolistTC,
     changeTodolistFilterAC,
     changeTodolistTitleAC, fetchTodolistsTC, FilterValuesType,
-    removeTodolistAC, setTodolistsAC, TodolistDomainType,
-    todolistsReducer
+    removeTodolistAC, removeTodolistTC, setTodolistsAC, TodolistDomainType,
+    todolistsReducer, updateTodolistTitleTC
 } from './state/todolists-reducer'
 import {
     addTaskAC, addTaskTC,
@@ -18,7 +18,7 @@ import {
     changeTaskTitleAC,
     fetchTasksTC,
     removeTaskAC, removeTaskTC,
-    tasksReducer, updateTaskStatusTC
+    tasksReducer, updateTaskStatusTC, updateTaskTitleTC
 } from './state/tasks-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './state/store';
@@ -58,8 +58,7 @@ function AppWithRedux() {
     }, []);
 
     const changeTaskTitle = useCallback(function (id: string, newTitle: string, todolistId: string) {
-        const action = changeTaskTitleAC(id, newTitle, todolistId);
-        dispatch(action);
+        dispatch(updateTaskTitleTC(id, todolistId, newTitle))
     }, []);
 
     const changeFilter = useCallback(function (value: FilterValuesType, todolistId: string) {
@@ -68,18 +67,15 @@ function AppWithRedux() {
     }, []);
 
     const removeTodolist = useCallback(function (id: string) {
-        const action = removeTodolistAC(id);
-        dispatch(action);
+        dispatch(removeTodolistTC(id))
     }, []);
 
     const changeTodolistTitle = useCallback(function (id: string, title: string) {
-        const action = changeTodolistTitleAC(id, title);
-        dispatch(action);
+        dispatch(updateTodolistTitleTC(id, title))
     }, []);
 
     const addTodolist = useCallback((title: string) => {
-        const action = addTodolistAC(title);
-        dispatch(action);
+        dispatch(addTodolistTC(title))
     }, [dispatch]);
 
     return (
