@@ -7,11 +7,13 @@ import {v1} from 'uuid'
 import {AppRootStateType} from '../../app/store'
 import {TaskPriorities, TaskStatuses} from '../../api/todolist-api'
 import {appReducer} from "../../app/app-reducer";
+import {authReducer} from "../../features/Login/auth-reducer";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
-    app: appReducer
+    app: appReducer,
+    auth: authReducer
 })
 
 const initialGlobalState: AppRootStateType = {
@@ -35,7 +37,11 @@ const initialGlobalState: AppRootStateType = {
     },
     app: {
         status: "idle",
-        error: null
+        error: null,
+        isInitialized: false
+    },
+    auth: {
+        isLoggedIn: false
     }
 };
 
